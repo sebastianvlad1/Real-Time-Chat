@@ -94,3 +94,5 @@ D:\ChatApp\bin\Debug\netcoreapp3.0\runtimes\win-x64\native\e_sqlite3.dll
 D:\ChatApp\bin\Debug\netcoreapp3.0\runtimes\win-x86\native\e_sqlite3.dll
 D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\Room\Default.cshtml.g.cs
 D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Home\Chat.cshtml.g.cs
+D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Account\Login.cshtml.g.cs
+D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Account\Register.cshtml.g.cs

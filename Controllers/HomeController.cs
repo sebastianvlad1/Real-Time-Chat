@@ -1,12 +1,15 @@
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ChatApp.Database;
 using ChatApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ChatApp.Controllers{
+    [Authorize]
     public class HomeController : Controller
     {
         private AppDbContext _context;
@@ -14,7 +17,14 @@ namespace ChatApp.Controllers{
         public HomeController(AppDbContext context){
             _context = context;
         }
-        public IActionResult Index() => View();
+        public IActionResult Index(){
+            var chats = _context.Chats
+            .Include(x => x.ChatUsers)
+            .Where(x => !x.ChatUsers
+                .Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            .ToList();
+            return View(chats);
+        } 
 
         [HttpGet("{id}")]
         public IActionResult Chat(int id) {
@@ -23,14 +33,14 @@ namespace ChatApp.Controllers{
             .FirstOrDefault(x => x.Id == id);
             return View(chat);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int chatId, string message){
 
             var mess = new Message {
                 ChatId = chatId,
                 Text = message,
-                Name = "Default",
+                Name = User.Identity.Name,
                 Timestamp = DateTime.Now
             };
             _context.Messages.Add(mess);
@@ -40,14 +50,36 @@ namespace ChatApp.Controllers{
 
         [HttpPost]
         public async Task<IActionResult> CreateRoom(string name){
-
-            _context.Add(new Chat {
+            
+            var chat = new Chat
+            {
                 Name = name,
                 Type = ChatType.Room
+            };
+            chat.ChatUsers.Add(new ChatUser{
+                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                Role = UserRole.Admin
             });
 
+            _context.Chats.Add(chat);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> JoinRoom(int id){
+            
+            var chatUser = new ChatUser{
+                ChatId = id,
+                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                Role = UserRole.Member
+            };
+
+            _context.ChatUsers.Add(chatUser);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Chat", "Home", new{ id = id });
         }
     }
 }
