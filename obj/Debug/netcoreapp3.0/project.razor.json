@@ -14369,6 +14369,11 @@
   "RootNamespace": "ChatApp",
   "Documents": [
     {
+      "FilePath": "d:\\ChatApp\\Views\\Home\\Chat.cshtml",
+      "TargetPath": "Views\\Home\\Chat.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\ChatApp\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
       "FileKind": "mvc"
@@ -14384,13 +14389,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "d:\\ChatApp\\Views\\Shared\\Components\\Rooms\\Default.cshtml",
-      "TargetPath": "Views\\Shared\\Components\\Rooms\\Default.cshtml",
+      "FilePath": "d:\\ChatApp\\Views\\_ViewStart.cshtml",
+      "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "d:\\ChatApp\\Views\\_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
+      "FilePath": "d:\\ChatApp\\Views\\Shared\\Components\\Room\\Default.cshtml",
+      "TargetPath": "Views\\Shared\\Components\\Room\\Default.cshtml",
       "FileKind": "mvc"
     }
   ],

@@ -39,7 +39,7 @@ namespace ChatApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("ChatId")
+                    b.Property<int>("ChatId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -257,9 +257,11 @@ namespace ChatApp.Migrations
 
             modelBuilder.Entity("ChatApp.Models.Message", b =>
                 {
-                    b.HasOne("ChatApp.Models.Chat", null)
+                    b.HasOne("ChatApp.Models.Chat", "Chat")
                         .WithMany("Messages")
-                        .HasForeignKey("ChatId");
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ChatApp.Models.User", b =>

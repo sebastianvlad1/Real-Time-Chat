@@ -31,7 +31,13 @@ namespace ChatApp
             {
                 x.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 5;
+            })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
         }
@@ -42,6 +48,8 @@ namespace ChatApp
             app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
         }
