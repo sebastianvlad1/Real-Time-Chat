@@ -8,7 +8,7 @@
         </div>
     }
 </div>
-    <form asp-controller="Home" asp-action="CreateMessage" onsubmit="sendMessage(event)" class="chat-input">
+    <form asp-controller="Chat" asp-action="SendMessage" onsubmit="sendMessage(event)" class="chat-input">
         <input type="hidden" name="roomId" value="@Model.Id">
         <input type="hidden" name="roomName" value="@Model.Name">
         <input type="text" name="message" id="message-input">

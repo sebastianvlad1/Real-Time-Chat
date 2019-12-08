@@ -20,8 +20,7 @@ namespace ChatApp.Controllers{
         public IActionResult Index(){
             var chats = _context.Chats
             .Include(x => x.ChatUsers)
-            .Where(x => !x.ChatUsers
-                .Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            .Where(x => x.Type == ChatType.Room && !x.ChatUsers.Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
             .ToList();
             return View(chats);
         } 

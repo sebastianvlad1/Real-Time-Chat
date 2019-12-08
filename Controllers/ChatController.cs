@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ChatApp.Database;
 using ChatApp.Hubs;
@@ -21,7 +22,7 @@ namespace ChatApp.Controllers
         }
 
         [HttpPost("[action]/{connectionId}/{roomId}")]
-        public async Task<IActionResult> JoinRoom(string connectionId, string roomId){
+        public async Task<IActionResult> JoinRoom(int id, string connectionId, string roomId, [FromServices] AppDbContext _context){
             await _chat.Groups.AddToGroupAsync(connectionId, roomId);
             return Ok();
         }
