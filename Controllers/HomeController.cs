@@ -26,6 +26,37 @@ namespace ChatApp.Controllers{
             return View(chats);
         } 
 
+        public IActionResult Find(){
+            var users = _context.Users.Where(x => x.Id != User.FindFirst(ClaimTypes.NameIdentifier).Value).ToList();
+            return View(users);
+        }
+
+        public IActionResult Private(){
+            var chats = _context.Chats
+            .Include(x => x.ChatUsers)
+            .ThenInclude(x => x.User)
+            .Where(x => x.Type == ChatType.Private && x.ChatUsers.Any(y => y.UserId == User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            .ToList();
+            return View(chats);
+        }
+
+        public async Task<IActionResult> CreatePrivateRoom(string userId){
+            var chat = new Chat {
+                Type = ChatType.Private
+            };
+            chat.ChatUsers.Add(new ChatUser {
+                UserId = userId
+            });
+
+            chat.ChatUsers.Add(new ChatUser{
+                UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value
+            });
+
+            _context.Chats.Add(chat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Chat", new { id = chat.Id});
+        }
+
         [HttpGet("{id}")]
         public IActionResult Chat(int id) {
             var chat = _context.Chats

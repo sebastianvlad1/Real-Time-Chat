@@ -96,3 +96,5 @@ D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Shared\Components\Room\Default.cs
 D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Home\Chat.cshtml.g.cs
 D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Account\Login.cshtml.g.cs
 D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Account\Register.cshtml.g.cs
+D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Home\Find.cshtml.g.cs
+D:\ChatApp\obj\Debug\netcoreapp3.0\Razor\Views\Home\Private.cshtml.g.cs

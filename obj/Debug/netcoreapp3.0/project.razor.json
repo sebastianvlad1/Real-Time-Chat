@@ -14379,8 +14379,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\ChatApp\\Views\\Home\\Find.cshtml",
+      "TargetPath": "Views\\Home\\Find.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\ChatApp\\Views\\Home\\Index.cshtml",
       "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\ChatApp\\Views\\Home\\Private.cshtml",
+      "TargetPath": "Views\\Home\\Private.cshtml",
       "FileKind": "mvc"
     },
     {

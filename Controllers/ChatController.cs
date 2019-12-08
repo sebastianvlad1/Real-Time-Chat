@@ -20,29 +20,33 @@ namespace ChatApp.Controllers
             _chat = chat;
         }
 
-        [HttpPost("[action]/{connectionId}/{roomName}")]
-        public async Task<IActionResult> JoinRoom(string connectionId, string roomName){
-            await _chat.Groups.AddToGroupAsync(connectionId, roomName);
+        [HttpPost("[action]/{connectionId}/{roomId}")]
+        public async Task<IActionResult> JoinRoom(string connectionId, string roomId){
+            await _chat.Groups.AddToGroupAsync(connectionId, roomId);
+            return Ok();
+        }
+        [HttpPost("[action]/{connectionId}/{roomId}")]
+        public async Task<IActionResult> LeaveRoom(string connectionId, string roomId){
+            await _chat.Groups.RemoveFromGroupAsync(connectionId, roomId);
             return Ok();
         }
 
-        [HttpPost("[action]/{connectionId}/{roomName}")]
-        public async Task<IActionResult> LeaveRoom(string connectionId, string roomName){
-            await _chat.Groups.RemoveFromGroupAsync(connectionId, roomName);
-            return Ok();
-        }
-
-        public async Task<IActionResult> SendMessage(int chatId, string message, string roomName, [FromServices] AppDbContext _context)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SendMessage(int roomId, string message, [FromServices] AppDbContext _context)
         {
             var mess = new Message {
-                ChatId = chatId,
+                ChatId = roomId,
                 Text = message,
                 Name = User.Identity.Name,
                 Timestamp = DateTime.Now
             };
             _context.Messages.Add(mess);
             await _context.SaveChangesAsync();
-            await _chat.Clients.Group(roomName).SendAsync("RecieveMessage", message);
+            await _chat.Clients.Group(roomId.ToString()).SendAsync("RecieveMessage", new {
+                Text = mess.Text,
+                Name = mess.Name,
+                Timestamp = mess.Timestamp.ToString("M/d/yyyy h:mm:ss tt")
+            });
             return Ok();
         }
     }
