@@ -40,6 +40,8 @@ namespace ChatApp
             })
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,6 +52,10 @@ namespace ChatApp
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSignalR(routes => {
+                
+            });
 
             app.UseMvcWithDefaultRoute();
         }
